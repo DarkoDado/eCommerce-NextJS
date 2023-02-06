@@ -1,0 +1,28 @@
+.footer {
+    background-color: #f8f8f8;
+    & .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+    }
+    & .copyright:hover {
+        color: $blue-color;
+    }
+}
+
+.news {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+& button {
+    margin-top: 10px;
+}
+
+& input {
+    outline: none;
+    margin: 10px 0;
+    margin-left: 15px;
+}
+} 
