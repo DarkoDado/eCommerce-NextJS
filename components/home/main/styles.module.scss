@@ -1,0 +1,38 @@
+.main {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 15px;
+    grid-template-areas:
+    "menu header header"
+    "menu swiper user"
+    "menu offers user" ;
+
+    .menu {
+        grid-area: menu;
+        height: 580px;
+        background-color: #fff;
+    }
+    .header {
+        grid-area: header;
+        height: 40px;
+        background-color: #fff;
+    }
+    .swipper {
+        grid-area: swiper;
+        height: 300px;
+        background-color: #fff;
+
+    }
+    .offers {
+        grid-area: offers;
+        background-color: #fff;
+        height: 220px;
+        overflow: hidden;
+    }
+    .user {
+        grid-area: user;
+        height: 530px;
+        background-color: green;
+        background-color: #fff;
+    }
+}
