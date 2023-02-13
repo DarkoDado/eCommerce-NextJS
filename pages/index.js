@@ -5,22 +5,23 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import axios from "axios";
 import Main from "../components/home/main";
-
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ country }) {
+  const { data: session } = useSession();
 
   return (
     <>
-
-      <Header country={country}/>
-    <div className={styles.home}>
-      <div className={styles.container}>
-        <Main />
+      <Header country={country} />
+      {session ? "you are logged in" : "you are not logged in"}
+      <div className={styles.home}>
+        <div className={styles.container}>
+          <Main />
+        </div>
       </div>
-    </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }
@@ -37,7 +38,7 @@ export async function getServerSideProps() {
   return {
     props: {
       // country: {name: data.name, flag: data.flag.emojitwo},
-      country: {name: "Bosnia", flag: "test"},
+      country: { name: "Bosnia", flag: "test" },
     },
   };
 }

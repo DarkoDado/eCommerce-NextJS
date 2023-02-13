@@ -5,9 +5,10 @@ import { RiAccountPinCircleLine, RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
 import { useState } from "react";
 import UserMenu from "./UserMenu";
+import { useSession } from "next-auth/react";
 
 function Top({ country }) {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const { data: session } = useSession();
   const [visible, setVisible] = useState(false);
 
   return (
@@ -41,14 +42,14 @@ function Top({ country }) {
               onMouseOver={() => setVisible(true)}
               onMouseLeave={() => setVisible(false)}
             >
-              {loggedIn ? (
+              {session ? (
                 <div className={styles.flex}>
                   <img
-                    src="https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
+                    src={session.user.image}
                     alt="profile"
                   />
 
-                  <span>Not logged in</span>
+                  <span>{session.user.name}</span>
                   <RiArrowDropDownLine />
                 </div>
               ) : (
@@ -58,7 +59,7 @@ function Top({ country }) {
                   <RiArrowDropDownLine />
                 </div>
               )}
-              {visible && <UserMenu loggedIn={loggedIn} />}
+              {visible && <UserMenu session={session} />}
             </li>
           </ul>
         </div>
