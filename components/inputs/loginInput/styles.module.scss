@@ -1,0 +1,61 @@
+.input {
+  position: relative;
+  max-width: 380px;
+  width: 100%;
+  height: 50px;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  align-items: center;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  svg {
+    width: 25px;
+    height: 25px;
+    stroke: #6666669a;
+    fill: #6666669a;
+  }
+  input {
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+    border-radius: 5px;
+    padding: 5px;
+    &::placeholder {
+      color: #aaa;
+      font-weight: 500;
+    }
+  }
+}
+.error {
+  background-color: $error-color;
+  margin: 55px 0;
+  svg {
+    fill: #fff;
+    stroke: #fff;
+  }
+}
+.error_popup {
+  position: absolute;
+  top: -55px;
+  background-color: $error-color;
+  height: 40px;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px;
+  margin-top: 3px;
+  span {
+    position: absolute;
+    bottom: -10px;
+    left: 1rem;
+    border-top: 10px solid $error-color;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+  }
+}
