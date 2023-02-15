@@ -14,9 +14,14 @@ export default function signin({ providers }) {
   const initialValues = {
     login_email: "",
     login_pw: "",
+    name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
   };
   const [user, setUser] = useState(initialValues);
-  const { login_email, login_pw } = user;
+  const { login_email, login_pw, name, email, password, confirm_password } =
+    user;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -27,6 +32,21 @@ export default function signin({ providers }) {
       .required("Email address is required!")
       .email("Please enter a valid emaila ddress"),
     login_pw: Yup.string().required("Please enter a password"),
+  });
+  const registerValidation = Yup.object({
+    name: Yup.string()
+      .required("Your name?")
+      .min(2, "First name must be between 2 and 10characters.")
+      .max(10, "First name must be between 2 and 10characters.")
+      .matches(/^[aA-zZ]/, "Numbers and special characters aren't allowed!"),
+    email: Yup.string().required("Enter your valid address."),
+    password: Yup.string()
+      .required("Enter your password")
+      .min(6, "Password must be atleast 6 characters")
+      .max(15, "Password can't be more than 15characters."),
+    confirm_password: Yup.string()
+      .required("Confirm your password!")
+      .oneOf([Yup.ref("password")], "Passwords must match!"),
   });
   return (
     <>
@@ -76,53 +96,70 @@ export default function signin({ providers }) {
             </Formik>
             <div className={styles.login_socials}>
               <span className={styles.or}>Or continue with</span>
-                <div className={styles.login_socials_wrap}>
+              <div className={styles.login_socials_wrap}>
                 {providers.map((provider) => (
-                <div key={provider.name}>
-                  <button className={styles.socialBtn} onClick={() => signIn(provider.id)}>Sign in with {provider.name}</button>
-                </div>
-              ))}
-                </div>
+                  <div key={provider.name}>
+                    <button
+                      className={styles.socialBtn}
+                      onClick={() => signIn(provider.id)}
+                    >
+                      Sign in with {provider.name}
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
         <div className={styles.login_container}>
-     
           <div className={styles.login_form}>
             <h1>Sign up</h1>
             <Formik
               enableReinitialize
               initialValues={{
-                login_email,
-                login_pw,
+                name,
+                email,
+                password,
+                confirm_password,
               }}
-              validationSchema={loginValidation}
+              validationSchema={registerValidation}
             >
               {(form) => (
                 <Form>
                   <LoginInput
-                    name="login_email"
+                    name="name"
+                    type="text"
+                    icon="user"
+                    placeholder="Full name"
+                    onChange={handleChange}
+                  />
+                  <LoginInput
+                    name="email"
                     type="text"
                     icon="email"
                     placeholder="Email Address"
                     onChange={handleChange}
                   />
+
                   <LoginInput
-                    name="login_pw"
+                    name="password"
                     type="password"
                     icon="password"
                     placeholder="Password"
                     onChange={handleChange}
                   />
-                  <IconBtn type="submit" text="Sign in" />
-                  <div className={styles.forgot}>
-                    <Link href="/forget">Forgot password</Link>
-                  </div>
+                  <LoginInput
+                    name="confirm_password"
+                    type="password"
+                    icon="password"
+                    placeholder="Confirm Password"
+                    onChange={handleChange}
+                  />
+                  <IconBtn type="submit" text="Sign up" />
                 </Form>
               )}
             </Formik>
-            
           </div>
         </div>
       </div>
