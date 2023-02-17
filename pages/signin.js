@@ -1,6 +1,6 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import LoginInput from "@/components/inputs/loginInput";
+import LoginInput from "../components/inputs/loginInput";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
@@ -9,6 +9,8 @@ import { BiLeftArrowAlt } from "react-icons/bi";
 import styles from "../styles/signin.module.scss";
 import IconBtn from "@/components/buttons/iconBtn";
 import { getProviders, signIn } from "next-auth/react";
+import axios from "axios";
+import LoaderSpinner from "../components/loaders/LoaderSpinner/index";
 
 export default function signin({ providers }) {
   const initialValues = {
@@ -17,16 +19,26 @@ export default function signin({ providers }) {
     name: "",
     email: "",
     password: "",
-    confirm_password: "",
+    success: "",
+    error: "",
   };
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(initialValues);
-  const { login_email, login_pw, name, email, password, confirm_password } =
-    user;
+  const {
+    login_email,
+    login_pw,
+    name,
+    email,
+    password,
+    confirm_password,
+    success,
+    error,
+  } = user;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-  console.log(user);
+
   const loginValidation = Yup.object({
     login_email: Yup.string()
       .required("Email address is required!")
@@ -48,8 +60,26 @@ export default function signin({ providers }) {
       .required("Confirm your password!")
       .oneOf([Yup.ref("password")], "Passwords must match!"),
   });
+  const signUpHandler = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/api/auth/signup", {
+        name,
+        email,
+        password,
+      });
+      setUser({ ...user, error: "", success: data.message });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setUser({ ...user, success: "", error: error.response.data.message });
+    }
+  };
   return (
     <>
+    {
+      loading && <LoaderSpinner loading={loading}/>
+    }
       <Header country="Serbia" />
       <div className={styles.login}>
         <div className={styles.login_container}>
@@ -124,6 +154,9 @@ export default function signin({ providers }) {
                 confirm_password,
               }}
               validationSchema={registerValidation}
+              onSubmit={() => {
+                signUpHandler();
+              }}
             >
               {(form) => (
                 <Form>
@@ -160,6 +193,8 @@ export default function signin({ providers }) {
                 </Form>
               )}
             </Formik>
+            <div>{success && <span>{success}</span>}</div>
+            <div>{error && <span>{error}</span>}</div>
           </div>
         </div>
       </div>

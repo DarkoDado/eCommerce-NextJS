@@ -13,6 +13,8 @@
   transition: .3s ;
   &:hover {
     transform: scale(1.05);
-    border: 1px solid blue;
+    border: 1px solid $blue-color;
+    background-color: #fff;
+    color: $blue-color;
   }
 }
