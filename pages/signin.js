@@ -11,6 +11,7 @@ import IconBtn from "@/components/buttons/iconBtn";
 import { getProviders, signIn } from "next-auth/react";
 import axios from "axios";
 import LoaderSpinner from "../components/loaders/LoaderSpinner/index";
+import Router  from "next/router";
 
 export default function signin({ providers }) {
   const initialValues = {
@@ -21,8 +22,9 @@ export default function signin({ providers }) {
     password: "",
     success: "",
     error: "",
+    login_error: "",
   };
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(initialValues);
   const {
     login_email,
@@ -33,6 +35,7 @@ export default function signin({ providers }) {
     confirm_password,
     success,
     error,
+    login_error,
   } = user;
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,16 +73,40 @@ export default function signin({ providers }) {
       });
       setUser({ ...user, error: "", success: data.message });
       setLoading(false);
+      setTimeout( async() => {
+        let options = {
+          redirect: false,
+          email: email,
+          password: password,
+        };
+        const res = await signIn("credentials", options);
+        Router.push("/");
+      }, 1000);
     } catch (error) {
       setLoading(false);
       setUser({ ...user, success: "", error: error.response.data.message });
     }
   };
+  const signInHandler = async () => {
+    setLoading(true);
+    let options = {
+      redirect: false,
+      email: login_email,
+      password: login_pw,
+    };
+    const res = await signIn("credentials", options);
+    setUser({ ...user, succes: "", error: "" });
+    setLoading(false);
+    if (res?.error) {
+      setLoading(false);
+      setUser({ ...user, login_error: res?.error });
+    } else {
+      return Router.push("/");
+    }
+  };
   return (
     <>
-    {
-      loading && <LoaderSpinner loading={loading}/>
-    }
+      {loading && <LoaderSpinner loading={loading} />}
       <Header country="Serbia" />
       <div className={styles.login}>
         <div className={styles.login_container}>
@@ -100,6 +127,9 @@ export default function signin({ providers }) {
                 login_pw,
               }}
               validationSchema={loginValidation}
+              onSubmit={() => {
+                signInHandler();
+              }}
             >
               {(form) => (
                 <Form>
@@ -118,6 +148,9 @@ export default function signin({ providers }) {
                     onChange={handleChange}
                   />
                   <IconBtn type="submit" text="Sign in" />
+                  {login_error && (
+                    <span className={styles.error}>{login_error}</span>
+                  )}
                   <div className={styles.forgot}>
                     <Link href="/forget">Forgot password</Link>
                   </div>
@@ -193,8 +226,10 @@ export default function signin({ providers }) {
                 </Form>
               )}
             </Formik>
-            <div>{success && <span>{success}</span>}</div>
-            <div>{error && <span>{error}</span>}</div>
+            <div>
+              {success && <span className={styles.success}>{success}</span>}
+            </div>
+            <div>{error && <span className={styles.error}>{error}</span>}</div>
           </div>
         </div>
       </div>

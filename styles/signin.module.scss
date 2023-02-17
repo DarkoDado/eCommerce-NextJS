@@ -13,7 +13,7 @@
     &:last-of-type {
       margin-top: 3rem;
       @media (max-width: 790px) {
-       margin-top: 0;;
+        margin-top: 0;
       }
     }
   }
@@ -87,16 +87,21 @@
       flex-direction: column;
       gap: 1rem;
       .socialBtn {
-        transition: .3s;
+        transition: 0.3s;
         cursor: pointer;
         &:hover {
           color: $blue-color;
           transform: scale(1.05);
         }
       }
-  
     }
-   
-    
+  }
+  .success {
+    padding: 7px;
+    color: $success-color;
+  }
+  .error {
+    padding: 7px;
+    color: $error-color;
   }
 }
