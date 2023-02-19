@@ -111,3 +111,13 @@ $shadow-1: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 // swiper
+
+
+.success {
+  padding: 7px;
+  color: $success-color;
+}
+.error {
+  padding: 7px;
+  color: $error-color;
+}

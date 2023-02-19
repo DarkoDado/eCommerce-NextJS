@@ -8,12 +8,17 @@ import { useState } from "react";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import styles from "../styles/signin.module.scss";
 import IconBtn from "@/components/buttons/iconBtn";
-import { getProviders, signIn } from "next-auth/react";
+import {
+  getCsrfToken,
+  getProviders,
+  getSession,
+  signIn,
+} from "next-auth/react";
 import axios from "axios";
 import LoaderSpinner from "../components/loaders/LoaderSpinner/index";
-import Router  from "next/router";
+import Router from "next/router";
 
-export default function signin({ providers }) {
+export default function signin({ providers, callbackUrl, csrfToken }) {
   const initialValues = {
     login_email: "",
     login_pw: "",
@@ -73,7 +78,7 @@ export default function signin({ providers }) {
       });
       setUser({ ...user, error: "", success: data.message });
       setLoading(false);
-      setTimeout( async() => {
+      setTimeout(async () => {
         let options = {
           redirect: false,
           email: email,
@@ -101,7 +106,7 @@ export default function signin({ providers }) {
       setLoading(false);
       setUser({ ...user, login_error: res?.error });
     } else {
-      return Router.push("/");
+      return Router.push(callbackUrl || "/");
     }
   };
   return (
@@ -132,7 +137,10 @@ export default function signin({ providers }) {
               }}
             >
               {(form) => (
-                <Form>
+                <Form method="post" action="/api/auth/signin/email">
+                  <input type="hidden" 
+                  name="csrfToken"
+                  defaultValue={csrfToken}/>
                   <LoginInput
                     name="login_email"
                     type="text"
@@ -152,7 +160,7 @@ export default function signin({ providers }) {
                     <span className={styles.error}>{login_error}</span>
                   )}
                   <div className={styles.forgot}>
-                    <Link href="/forget">Forgot password</Link>
+                    <Link href="/auth/forgot">Forgot password</Link>
                   </div>
                 </Form>
               )}
@@ -160,16 +168,21 @@ export default function signin({ providers }) {
             <div className={styles.login_socials}>
               <span className={styles.or}>Or continue with</span>
               <div className={styles.login_socials_wrap}>
-                {providers.map((provider) => (
-                  <div key={provider.name}>
-                    <button
-                      className={styles.socialBtn}
-                      onClick={() => signIn(provider.id)}
-                    >
-                      Sign in with {provider.name}
-                    </button>
-                  </div>
-                ))}
+                {providers.map((provider) => {
+                  if (provider.name == "Credentials") {
+                    return;
+                  }
+                  return (
+                    <div key={provider.name}>
+                      <button
+                        className={styles.socialBtn}
+                        onClick={() => signIn(provider.id)}
+                      >
+                        Sign in with {provider.name}
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -239,8 +252,21 @@ export default function signin({ providers }) {
 }
 
 export async function getServerSideProps(context) {
+  const { req, query } = context;
+
+  const session = await getSession({ req });
+  const  {callbackUrl}  = query;
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "callbackUrl",
+      },
+    };
+  }
+  const csrfToken = await getCsrfToken(context);
   const providers = Object.values(await getProviders());
   return {
-    props: { providers },
+    props: { providers, csrfToken, callbackUrl },
   };
 }
