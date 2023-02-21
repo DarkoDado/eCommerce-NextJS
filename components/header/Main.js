@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { RiSearch2Line } from "react-icons/ri";
-import { FaOpencart } from "react-icons/fa";
+import { CgShoppingCart } from "react-icons/cg";
 import styles from "./styles.module.scss";
 import { useSelector } from "react-redux";
 
@@ -22,7 +22,7 @@ function Main() {
         </div>
         <Link href="/cart">
           <div className={styles.cart}>
-            <FaOpencart />
+            <CgShoppingCart />
             <span> {cart.length}</span>
           </div>
         </Link>

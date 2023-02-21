@@ -1,3 +1,6 @@
+import Header from "@/components/home/main/Header";
+import Link from "next/link";
+
 import Menu from "./Menu";
 import Offers from "./offers";
 import styles from "./styles.module.scss";
@@ -7,7 +10,7 @@ import User from "./User";
 export default function Main() {
   return (
     <div className={styles.main}>
-      <div className={styles.header}>header</div>
+      <Header />
       <Menu />
       <MainSwiper />
       <Offers />

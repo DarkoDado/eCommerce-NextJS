@@ -15,7 +15,7 @@ export default function Menu() {
         </li>
         <div className={styles.menu_list}>
           {menuArr.map((item) => (
-            <li>
+            <li key={item.name}>
               <Link href={item.link}>
                 <span>{item.name}</span>
               </Link>

@@ -15,7 +15,6 @@ export default function Home({ country }) {
   return (
     <>
       <Header country={country} />
-      {session ? "you are logged in" : "you are not logged in"}
       <div className={styles.home}>
         <div className={styles.container}>
           <Main />

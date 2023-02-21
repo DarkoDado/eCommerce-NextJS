@@ -26,7 +26,7 @@ export default function Offers() {
       >
     
     {offersArr.map((offer) => (
-      <SwiperSlide>
+      <SwiperSlide key={offer.image}>
         <Link href="">
         <img src={offer.image} alt="" />
         </Link>

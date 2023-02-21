@@ -100,7 +100,7 @@ export default function signin({ providers, callbackUrl, csrfToken }) {
       password: login_pw,
     };
     const res = await signIn("credentials", options);
-    setUser({ ...user, succes: "", error: "" });
+    setUser({ ...user, succes: "Successfully signed", error: "" });
     setLoading(false);
     if (res?.error) {
       setLoading(false);

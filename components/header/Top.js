@@ -28,7 +28,7 @@ function Top({ country }) {
             <li className={styles.li}>
               <span>Customer Service</span>
             </li>
-            <li>
+            <li className={styles.li}>
               <span>Help</span>
             </li>
             <li className={styles.li}>
