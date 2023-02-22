@@ -1,0 +1,158 @@
+.flashDeals {
+    margin: 1rem 0;
+    background-color: #fff;
+    &_header {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #fff;
+        font-weight: 900;
+        font-size: 24px;
+        text-transform: uppercase;
+        background-color: #FF8000;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        @media (max-width:610px) {
+            font-size: 18px;
+        }
+        @media (max-width:510px) {
+            font-size: 14px;
+        }
+        @media (max-width:465px) {
+            flex-direction: column;
+        }
+        & h1 {
+            &:hover {
+                color: red;
+            }
+        }
+    }
+    &_list {
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 1rem;
+        @media (max-width: 600px) {
+            justify-content: center;
+        }
+    }
+}
+.card {
+    margin-left: 5px;
+    height: 420px;
+    width: 280px;
+    &_img {
+        position: relative;
+        width: 100%;
+        height: 320px;
+        cursor: pointer;
+        overflow: hidden;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5%;
+            padding: 0 5px;
+        }
+        .flash{
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50px;
+            height: 65px;
+            background-color: #FF8000;
+            padding: 1rem;
+            margin-left: 5px;
+            &:hover {
+                background-color: red;
+            }
+            span {
+                color: #333;
+                font-weight: 600;
+                font-size: 18px;
+                transform: translateY(18px);
+                margin-top: 3px;
+               
+                &:hover {
+                    color: #fff;
+                }
+            }
+            svg {
+                position: absolute;
+                transform: scale(2);
+                fill: #333;
+                &:hover {
+                    fill: #fff;
+                }
+            }
+        }
+    }
+    &_price {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 2px;
+      
+        span {
+            font-weight: 700;
+            &:first-of-type {
+                color: red;
+            }
+            &:last-of-type{
+                font-size: 14px;
+                font-weight: normal;
+                text-decoration: line-through;
+                color: #666;
+            }
+        }
+    }
+    &_bar {
+        width: 100%;
+        height: 10px;
+        border-radius: 10px;
+        background-color: #ccc;
+        margin-top: 2px;
+        &_inner {
+            background-color: #FF8000;
+            border-radius: 10px;
+            height: 100%;   
+        }
+    }
+    &_percentage {
+        font-size: 14px;
+        color: #111;
+        margin-top: 2px;
+        display: flex;
+        justify-content: flex-start;
+    }
+}
+
+// .flashDeals_swiper {
+
+//     .swiper {
+//         width: 100%;
+//         height: 100%;
+//       }
+      
+//       .swiper-slide {
+//         text-align: center;
+//         font-size: 18px;
+//         background: #fff;
+      
+//         /* Center slide text vertically */
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//       }
+      
+//       .swiper-slide img {
+//         display: block;
+//         width: 100%;
+//         height: 100%;
+//         object-fit: cover;
+//         border-radius: 10px;
+//       }
+// }

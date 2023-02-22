@@ -63,3 +63,36 @@ export const menuArr = [
     images: [],
   },
 ];
+
+export const flashDealsArr = [
+  {
+    image: "https://imgaz1.staticbg.com/thumb/view/oaupload/banggood/images/D8/81/30b3298e-d934-4f7a-be8a-12c11babf871.jpg.webp",
+    price: "99",
+    discount: "20",
+    link:"",
+    sold: "16",
+  },
+  {
+    image: "https://imgaz2.staticbg.com/thumb/view/oaupload/ser1/banggood/images/DA/23/f57ca9ea-d8d3-4884-bee4-f94c9eb24e75.jpg",
+    price:"75",
+    link:"",
+    discount: "15",
+    sold: "9",
+  },
+  {
+    image: "https://imgaz1.staticbg.com/thumb/view/oaupload/banggood/images/D8/81/30b3298e-d934-4f7a-be8a-12c11babf871.jpg.webp",
+    price: "122",
+    link:"",
+    discount: "20",
+    sold: "19",
+  },
+  {
+    image: "https://imgaz1.staticbg.com/thumb/view/oaupload/banggood/images/C3/49/5bd852ae-8202-4b99-a085-19d5e658b64a.jpg.webp",
+    price: "88",
+    link:"",
+    discount: "20",
+    sold: "14",
+  },
+
+  
+]
