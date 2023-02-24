@@ -7,12 +7,15 @@ import axios from "axios";
 import Main from "../components/home/main";
 import { useSession, signIn, signOut } from "next-auth/react";
 import FlashDeals from "@/components/home/flashDeals";
+import Category from "@/components/home/category";
+import { women_accessories, women_dresses, women_shoes } from "@/data/home";
+import { useMediaQuery } from "react-responsive";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ country }) {
   const { data: session } = useSession();
-
+  const isMedium = useMediaQuery({ query: "(max-width: 850px)" });
   return (
     <>
       <Header country={country} />
@@ -20,6 +23,25 @@ export default function Home({ country }) {
         <div className={styles.container}>
           <Main />
           <FlashDeals />
+          <div className={styles.home_category}>
+            <Category
+              header="Dresses"
+              products={women_dresses}
+              background="#5a31f4"
+            />
+            {!isMedium && (
+              <Category
+                header="Accessories"
+                products={women_accessories}
+                background="green"
+              />
+            )}
+            <Category
+              header="Shoes"
+              products={women_shoes}
+              background="black"
+            />
+          </div>
         </div>
       </div>
       <Footer />
