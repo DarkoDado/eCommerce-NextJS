@@ -117,7 +117,9 @@ export default function signin({ providers, callbackUrl, csrfToken }) {
         <div className={styles.login_container}>
           <div className={styles.login_header}>
             <div className={styles.back_svg}>
-              <BiLeftArrowAlt />
+              <Link href="/">
+                <BiLeftArrowAlt />
+              </Link>
             </div>
             <span>
               Join us! <Link href="/">Go Store</Link>
@@ -138,9 +140,11 @@ export default function signin({ providers, callbackUrl, csrfToken }) {
             >
               {(form) => (
                 <Form method="post" action="/api/auth/signin/email">
-                  <input type="hidden" 
-                  name="csrfToken"
-                  defaultValue={csrfToken}/>
+                  <input
+                    type="hidden"
+                    name="csrfToken"
+                    defaultValue={csrfToken}
+                  />
                   <LoginInput
                     name="login_email"
                     type="text"
@@ -255,7 +259,7 @@ export async function getServerSideProps(context) {
   const { req, query } = context;
 
   const session = await getSession({ req });
-  const  {callbackUrl}  = query;
+  const { callbackUrl } = query;
 
   if (session) {
     return {

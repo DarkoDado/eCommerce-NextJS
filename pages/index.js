@@ -10,10 +10,13 @@ import FlashDeals from "@/components/home/flashDeals";
 import Category from "@/components/home/category";
 import { women_accessories, women_dresses, women_shoes } from "@/data/home";
 import { useMediaQuery } from "react-responsive";
+import db from "../utils/db";
+import Product from "../models/Product";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ country }) {
+export default function Home({ country, products }) {
+  console.log("products", products);
   const { data: session } = useSession();
   const isMedium = useMediaQuery({ query: "(max-width: 850px)" });
   return (
@@ -49,6 +52,9 @@ export default function Home({ country }) {
   );
 }
 export async function getServerSideProps() {
+  db.connectDb();
+  let products = await Product.find().sort({ createdAt: -1 }).lean();
+  console.log(products);
   let data = await axios
     .get("https://api.ipregistry.co/?key=m19bq3fbdu613paa")
     .then((res) => {
@@ -60,6 +66,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
+      products: JSON.parse(JSON.stringify(products)),
       // country: {name: data.name, flag: data.flag.emojitwo},
       country: { name: "Bosnia", flag: "test" },
     },
