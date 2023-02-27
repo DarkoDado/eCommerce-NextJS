@@ -12,6 +12,7 @@ import { women_accessories, women_dresses, women_shoes } from "@/data/home";
 import { useMediaQuery } from "react-responsive";
 import db from "../utils/db";
 import Product from "../models/Product";
+import ProductCard from "@/components/productCard";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,6 +45,11 @@ export default function Home({ country, products }) {
               products={women_shoes}
               background="black"
             />
+          </div>
+          <div className={styles.product}>
+            {products.map((product) => (
+              <ProductCard product={product} key={product._id} />
+            ))}
           </div>
         </div>
       </div>

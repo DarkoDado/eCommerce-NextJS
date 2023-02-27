@@ -12,5 +12,14 @@
         grid-template-columns: 1fr;
     }
   }
+  .product {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+  }
 }
 
